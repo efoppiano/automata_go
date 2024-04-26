@@ -21,7 +21,7 @@ type Automata struct {
 
 func NewAutomata(config *utils.Config, generator generator.Generator) *Automata {
 	if config == nil {
-		config = utils.NewFromEnvFile()
+		config = utils.NewConfigFromEnv()
 	}
 
 	totalRows := config.TotalRows()
