@@ -58,16 +58,16 @@ func (c *Config) Duplicate() *Config {
 }
 
 func NewConfigFromEnv() *Config {
-	crosswalkRows := GetEnvIntOrDefault("crosswalk_rows", 6)
-	crosswalkCols := GetEnvIntOrDefault("crosswalk_cols", 42)
-	waitingAreaCols := GetEnvIntOrDefault("waiting_area_cols", 1)
-	vehicleLanes := GetEnvIntOrDefault("vehicle_lanes", 6)
-	vehicleRows := GetEnvIntOrDefault("vehicle_rows", 6)
-	vehicleCols := GetEnvIntOrDefault("vehicle_cols", 5)
-	stopLightCycle := GetEnvIntOrDefault("stop_light_cycle", 90)
-	greenLightTime := GetEnvIntOrDefault("green_light_time", 50)
-	pedestrianArrivalRate := GetEnvFloatOrDefault("pedestrian_arrival_rate", 2000.0/(2*3600))
-	vehicleArrivalRate := GetEnvFloatOrDefault("vehicle_arrival_rate", 1400.0/(6*3600))
+	crosswalkRows := GetEnvIntOrDefault("CROSSWALK_ROWS", 6)
+	crosswalkCols := GetEnvIntOrDefault("CROSSWALK_COLS", 42)
+	waitingAreaCols := GetEnvIntOrDefault("WAITING_AREA_COLS", 1)
+	vehicleLanes := GetEnvIntOrDefault("VEHICLE_LANES", 6)
+	vehicleRows := GetEnvIntOrDefault("VEHICLE_ROWS", 6)
+	vehicleCols := GetEnvIntOrDefault("VEHICLE_COLS", 5)
+	stopLightCycle := GetEnvIntOrDefault("STOP_LIGHT_CYCLE", 90)
+	greenLightTime := GetEnvIntOrDefault("GREEN_LIGHT_TIME", 50)
+	pedestrianArrivalRate := GetEnvFloatOrDefault("PEDESTRIAN_ARRIVAL_RATE", 2000.0/(2*3600))
+	vehicleArrivalRate := GetEnvFloatOrDefault("VEHICLE_ARRIVAL_RATE", 1400.0/(6*3600))
 
 	vehicleLaneCols := crosswalkCols / vehicleLanes
 	crosswalkPrototype := NewRectangle(crosswalkRows, crosswalkCols)
