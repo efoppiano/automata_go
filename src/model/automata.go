@@ -72,12 +72,6 @@ func (a *Automata) buildVehicleLanes() {
 	vehicleLanesAmount := a.Config.CrosswalkProt.Cols() / a.Config.VehicleLaneProt.Cols()
 	for i := 0; i < vehicleLanesAmount; i++ {
 		vehicleLaneZone := a.Config.VehicleLaneProt.Duplicate()
-		/*
-			if i == 0 {
-				vehicleLaneZone = utils.NewRectangle(vehicleLaneZone.Rows()-2*a.Config.VehicleProt.Rows(), vehicleLaneZone.Cols())
-				vehicleLaneZone.MoveDown(2 * a.Config.VehicleProt.Rows())
-			}
-		*/
 		vehicleLaneZone.MoveRight(a.Config.WaitingAreaProt.Cols() + i*vehicleLaneZone.Cols())
 
 		var facing utils.Direction
