@@ -42,7 +42,7 @@ func run(cfg *ScenarioConfig, inputCh chan Input, resultsCh chan *Result) {
 			automata.AdvanceTo(cfg.SimulationTime)
 			results = append(results, automata.Conflicts)
 		}
-		fmt.Println("Scenario ", i, " finished in", time.Since(start))
+		fmt.Println("Scenario", i, "finished in", time.Since(start))
 
 		pedestrianArrivalRate := config.PedestrianArrivalRate
 		vehicleArrivalRate := config.VehicleArrivalRate

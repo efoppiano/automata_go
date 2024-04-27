@@ -28,3 +28,11 @@ func GetEnvFloatOrDefault(key string, defaultValue float64) float64 {
 	}
 	return r
 }
+
+func GetEnvStr(key string) *string {
+	val := os.Getenv(key)
+	if val == "" {
+		return nil
+	}
+	return &val
+}

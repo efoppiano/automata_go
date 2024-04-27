@@ -33,12 +33,12 @@ func NewScenarioConfigFromEnv() *ScenarioConfig {
 
 func (s *ScenarioConfig) Print() {
 	println("Running with the following configuration:")
-	println("Initial pedestrian arrival rate: ", s.InitialPedestrianArrivalRateHr, " cap/hr")
-	println("Final pedestrian arrival rate: ", s.FinalPedestrianArrivalRateHr, " cap/hr")
-	println("Initial vehicle arrival rate: ", s.InitialVehicleArrivalRateHr, " veh/hr")
-	println("Final vehicle arrival rate: ", s.FinalVehicleArrivalRateHr, " veh/hr")
-	println("Runs per simulation: ", s.RunsPerSimulation)
-	println("Simulation time: ", s.SimulationTime, " seconds")
-	println("Green light time: ", utils.GetEnvIntOrDefault("GREEN_LIGHT_TIME", 50), " seconds")
+	println("Initial pedestrian arrival rate:", s.InitialPedestrianArrivalRateHr, "cap/hr")
+	println("Final pedestrian arrival rate:", s.FinalPedestrianArrivalRateHr, "cap/hr")
+	println("Initial vehicle arrival rate:", s.InitialVehicleArrivalRateHr, "veh/hr")
+	println("Final vehicle arrival rate:", s.FinalVehicleArrivalRateHr, "veh/hr")
+	println("Runs per simulation:", s.RunsPerSimulation)
+	println("Simulation time:", s.SimulationTime, "seconds")
+	println("Green light time:", utils.GetEnvIntOrDefault("GREEN_LIGHT_TIME", 50), " seconds")
 	fmt.Printf("Crosswalk width: %.1f meters\n", float64(utils.GetEnvIntOrDefault("CROSSWALK_ROWS", 6))/2)
 }

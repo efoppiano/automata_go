@@ -44,6 +44,37 @@ func buildConfigs(scenarioCfg *ScenarioConfig) []*utils.Config {
 	return configs
 }
 
+func startWorkers(scenarioCfg *ScenarioConfig, inputCh chan Input, resultsCh chan *Result) {
+	goRoutines := utils.GetEnvIntOrDefault("GOROUTINES", 20)
+	for i := 0; i < goRoutines; i++ {
+		go run(scenarioCfg, inputCh, resultsCh)
+	}
+}
+
+func saveResults(resultsCh chan *Result, expectedResults int) {
+	fileName := utils.GetEnvStr("RESULTS_FILE_NAME")
+	if fileName == nil {
+		t := time.Now()
+		defaultFileName := fmt.Sprintf("%d-%d-%d-%d-%d-%d.csv", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+		fileName = &defaultFileName
+	}
+	f, err := os.Create(fmt.Sprintf("results/%s", *fileName))
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	f.WriteString("pedestrian_arrival_rate,vehicle_arrival_rate,conflicts\n")
+
+	for i := 0; i < expectedResults; i++ {
+		r := <-resultsCh
+		println("Received result", i)
+		f.WriteString(fmt.Sprintf("%d,%d,%f\n", int(r.PedestrianArrivalRate*2*3600), int(r.VehicleArrivalRate*6*3600), r.Conflicts))
+	}
+
+	fmt.Printf("Results saved in results/%s\n", *fileName)
+}
+
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -56,29 +87,13 @@ func main() {
 
 	inputCh := make(chan Input, 10000)
 	resultsCh := make(chan *Result, 10000)
-	var i uint64
-	for i = 0; i < 20; i++ {
-		go run(scenarioCfg, inputCh, resultsCh)
-	}
+	startWorkers(scenarioCfg, inputCh, resultsCh)
 
 	for i, config := range configs {
 		inputCh <- Input{uint64(i), config}
 	}
 	close(inputCh)
 
-	t := time.Now()
-	f, err := os.Create(fmt.Sprintf("results/%d-%d-%d-%d-%d-%d.csv", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second()))
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	f.WriteString("pedestrian_arrival_rate,vehicle_arrival_rate,conflicts\n")
-
-	for i := 0; i < len(configs); i++ {
-		r := <-resultsCh
-		println("Received result ", i)
-		f.WriteString(fmt.Sprintf("%d,%d,%f\n", int(r.PedestrianArrivalRate*2*3600), int(r.VehicleArrivalRate*6*3600), r.Conflicts))
-	}
+	saveResults(resultsCh, len(configs))
 	close(resultsCh)
 }
