@@ -86,12 +86,7 @@ func (a *Automata) buildVehicleLanes() {
 
 		grid := grid.NewRelativeGrid(origin, vehicleLaneZone, facing, a.Grid)
 
-		var vehicleLane *VehicleLane
-		if i == 0 || i == vehicleLanesAmount-1 {
-			vehicleLane = NewVehicleLane(a.Config, grid, true, a.generator)
-		} else {
-			vehicleLane = NewVehicleLane(a.Config, grid, false, a.generator)
-		}
+		vehicleLane := NewVehicleLane(a.Config, grid, false, a.generator)
 		a.VehicleLanes = append(a.VehicleLanes, vehicleLane)
 	}
 }
