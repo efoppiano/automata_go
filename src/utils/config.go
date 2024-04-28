@@ -7,6 +7,7 @@ type Config struct {
 	VehicleProt           *Rectangle
 	StopLightCycle        int
 	GreenLightTime        int
+	YellowLightTime       int
 	PedestrianArrivalRate float64
 	VehicleArrivalRate    float64
 }
@@ -18,6 +19,7 @@ func NewConfig(
 	vehicleProt *Rectangle,
 	stopLightCycle int,
 	greenLightTime int,
+	yellowLightTime int,
 	pedestrianArrivalRate,
 	vehicleArrivalRate float64) *Config {
 	return &Config{
@@ -27,6 +29,7 @@ func NewConfig(
 		vehicleProt,
 		stopLightCycle,
 		greenLightTime,
+		yellowLightTime,
 		pedestrianArrivalRate,
 		vehicleArrivalRate,
 	}
@@ -52,6 +55,7 @@ func (c *Config) Duplicate() *Config {
 		c.VehicleProt,
 		c.StopLightCycle,
 		c.GreenLightTime,
+		c.YellowLightTime,
 		c.PedestrianArrivalRate,
 		c.VehicleArrivalRate,
 	)
@@ -66,6 +70,7 @@ func NewConfigFromEnv() *Config {
 	vehicleCols := GetEnvIntOrDefault("VEHICLE_COLS", 5)
 	stopLightCycle := GetEnvIntOrDefault("STOP_LIGHT_CYCLE", 90)
 	greenLightTime := GetEnvIntOrDefault("GREEN_LIGHT_TIME", 50)
+	yellowLightTime := GetEnvIntOrDefault("YELLOW_LIGHT_TIME", 5)
 	pedestrianArrivalRate := GetEnvFloatOrDefault("PEDESTRIAN_ARRIVAL_RATE", 2000.0/(2*3600))
 	vehicleArrivalRate := GetEnvFloatOrDefault("VEHICLE_ARRIVAL_RATE", 1400.0/(6*3600))
 
@@ -82,6 +87,7 @@ func NewConfigFromEnv() *Config {
 		vehiclePrototype,
 		stopLightCycle,
 		greenLightTime,
+		yellowLightTime,
 		pedestrianArrivalRate,
 		vehicleArrivalRate,
 	)

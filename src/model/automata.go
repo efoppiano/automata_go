@@ -38,7 +38,7 @@ func NewAutomata(config *utils.Config, generator generator.Generator) *Automata 
 		CrosswalkZone:       crosswalkZone,
 		Epoch:               0,
 		Conflicts:           0,
-		PedestrianStopLight: NewStopLight(config.StopLightCycle, config.GreenLightTime, Green),
+		PedestrianStopLight: NewStopLight(config.StopLightCycle, config.GreenLightTime, config.YellowLightTime),
 		Plotter:             NewPlotter(grid, config),
 		generator:           generator,
 	}

@@ -108,7 +108,7 @@ func (v *Vehicle) Think(crosswalkZone *utils.Rectangle, pedestrianStopLight *Sto
 }
 
 func (v *Vehicle) thinkStraight(crosswalkZone *utils.Rectangle, pedestrianStopLight *StopLight) {
-	if v.IsEntityAhead() || (pedestrianStopLight.IsGreen() && !v.crossing) {
+	if v.IsEntityAhead() || (!pedestrianStopLight.IsRed() && !v.crossing) {
 		v.desired_movement = utils.Still()
 	} else if v.crossing || pedestrianStopLight.IsRed() {
 		v.desired_movement = utils.Forward(v.vel)

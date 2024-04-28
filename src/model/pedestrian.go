@@ -177,6 +177,16 @@ func (p *Pedestrian) GetPosLeftRightRandom() *utils.RelativePosition {
 }
 
 func (p *Pedestrian) Think(crosswalkZone *utils.Rectangle, pedestrianStopLight *StopLight) {
+	if pedestrianStopLight.IsYellow() && pedestrianStopLight.PrevStateIsGreen() {
+		if !p.crossing {
+			p.desired_displacement = utils.Still()
+			return
+		} else {
+			p.vel = 6
+			p.repr = "😰"
+		}
+	}
+
 	if pedestrianStopLight.IsRed() {
 		if !p.rel_grid.IsIn(crosswalkZone) {
 			p.desired_displacement = utils.Still()
